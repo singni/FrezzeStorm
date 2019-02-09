@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.storm.mapper.ModuleMapper">
+    <resultMap id="BaseResultMap" type="com.storm.domain.Module">
+        <id column="MODULE_ID" property="moduleId" jdbcType="VARCHAR"/>
+        <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR"/>
+        <result column="PATH" property="path" jdbcType="VARCHAR"/>
+        <result column="CTYPE" property="ctype" jdbcType="INTEGER"/>
+        <result column="STATE" property="state" jdbcType="INTEGER"/>
+        <result column="ORDER_NO" property="orderNo" jdbcType="INTEGER"/>
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR"/>
+        <result column="CREATE_DEPT" property="createDept" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="pcode" property="pcode" jdbcType="VARCHAR"/>
+        <result column="component" property="component" jdbcType="VARCHAR"/>
+        <result column="redirect" property="redirect" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="hidden" property="hidden" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    MODULE_ID, PARENT_ID, PATH, CTYPE, STATE, ORDER_NO, CREATE_BY, CREATE_DEPT, CREATE_TIME, 
+    UPDATE_BY, UPDATE_TIME, pcode, component, redirect, name, hidden
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.storm.domain.ModuleExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from module_p
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from module_p
+        where MODULE_ID = #{moduleId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from module_p
+    where MODULE_ID = #{moduleId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.storm.domain.ModuleExample">
+        delete from module_p
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.storm.domain.Module">
+    insert into module_p (MODULE_ID, PARENT_ID, PATH, 
+      CTYPE, STATE, ORDER_NO, 
+      CREATE_BY, CREATE_DEPT, CREATE_TIME, 
+      UPDATE_BY, UPDATE_TIME, pcode, 
+      component, redirect, name, 
+      hidden)
+    values (#{moduleId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{ctype,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{orderNo,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDept,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{pcode,jdbcType=VARCHAR}, 
+      #{component,jdbcType=VARCHAR}, #{redirect,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{hidden,jdbcType=BIT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.storm.domain.Module">
+        insert into module_p
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="moduleId != null">
+                MODULE_ID,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="path != null">
+                PATH,
+            </if>
+            <if test="ctype != null">
+                CTYPE,
+            </if>
+            <if test="state != null">
+                STATE,
+            </if>
+            <if test="orderNo != null">
+                ORDER_NO,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="createDept != null">
+                CREATE_DEPT,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="pcode != null">
+                pcode,
+            </if>
+            <if test="component != null">
+                component,
+            </if>
+            <if test="redirect != null">
+                redirect,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="hidden != null">
+                hidden,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="moduleId != null">
+                #{moduleId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="ctype != null">
+                #{ctype,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDept != null">
+                #{createDept,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcode != null">
+                #{pcode,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="redirect != null">
+                #{redirect,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="hidden != null">
+                #{hidden,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.storm.domain.ModuleExample" resultType="java.lang.Integer">
+        select count(*) from module_p
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update module_p
+        <set>
+            <if test="record.moduleId != null">
+                MODULE_ID = #{record.moduleId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.parentId != null">
+                PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.path != null">
+                PATH = #{record.path,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ctype != null">
+                CTYPE = #{record.ctype,jdbcType=INTEGER},
+            </if>
+            <if test="record.state != null">
+                STATE = #{record.state,jdbcType=INTEGER},
+            </if>
+            <if test="record.orderNo != null">
+                ORDER_NO = #{record.orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="record.createBy != null">
+                CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createDept != null">
+                CREATE_DEPT = #{record.createDept,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateBy != null">
+                UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.updateTime != null">
+                UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.pcode != null">
+                pcode = #{record.pcode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.component != null">
+                component = #{record.component,jdbcType=VARCHAR},
+            </if>
+            <if test="record.redirect != null">
+                redirect = #{record.redirect,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.hidden != null">
+                hidden = #{record.hidden,jdbcType=BIT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update module_p
+        set MODULE_ID = #{record.moduleId,jdbcType=VARCHAR},
+        PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+        PATH = #{record.path,jdbcType=VARCHAR},
+        CTYPE = #{record.ctype,jdbcType=INTEGER},
+        STATE = #{record.state,jdbcType=INTEGER},
+        ORDER_NO = #{record.orderNo,jdbcType=INTEGER},
+        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+        CREATE_DEPT = #{record.createDept,jdbcType=VARCHAR},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+        pcode = #{record.pcode,jdbcType=VARCHAR},
+        component = #{record.component,jdbcType=VARCHAR},
+        redirect = #{record.redirect,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        hidden = #{record.hidden,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.storm.domain.Module">
+        update module_p
+        <set>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                PATH = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="ctype != null">
+                CTYPE = #{ctype,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                STATE = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                ORDER_NO = #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDept != null">
+                CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcode != null">
+                pcode = #{pcode,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                component = #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="redirect != null">
+                redirect = #{redirect,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="hidden != null">
+                hidden = #{hidden,jdbcType=BIT},
+            </if>
+        </set>
+        where MODULE_ID = #{moduleId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.storm.domain.Module">
+    update module_p
+    set PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      PATH = #{path,jdbcType=VARCHAR},
+      CTYPE = #{ctype,jdbcType=INTEGER},
+      STATE = #{state,jdbcType=INTEGER},
+      ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      pcode = #{pcode,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      redirect = #{redirect,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hidden = #{hidden,jdbcType=BIT}
+    where MODULE_ID = #{moduleId,jdbcType=VARCHAR}
+  </update>
+    <resultMap id="moduleResult" type="com.storm.domain.Module">
+        <id column="MODULE_ID" property="moduleId" jdbcType="VARCHAR"/>
+        <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR"/>
+        <result column="PATH" property="path" jdbcType="VARCHAR"/>
+        <result column="CTYPE" property="ctype" jdbcType="INTEGER"/>
+        <result column="STATE" property="state" jdbcType="INTEGER"/>
+        <result column="ORDER_NO" property="orderNo" jdbcType="INTEGER"/>
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR"/>
+        <result column="CREATE_DEPT" property="createDept" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="pcode" property="pcode" jdbcType="VARCHAR"/>
+        <result column="component" property="component" jdbcType="VARCHAR"/>
+        <result column="redirect" property="redirect" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="hidden" property="hidden" jdbcType="BIT"/>
+        <association property="meta" javaType="com.storm.domain.Meta">
+            <id column="meta_id" property="metaId"></id>
+            <result column="icon" property="icon"></result>
+            <result column="title" property="title"></result>
+        </association>
+        <collection property="children" ofType="com.storm.domain.Module" column="MODULE_ID" select="findChildren">
+            <association property="meta" javaType="com.storm.domain.Meta">
+                <id column="meta_id" property="metaId"></id>
+                <result column="icon" property="icon"></result>
+                <result column="title" property="title"></result>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="findChildren" resultMap="moduleResult">
+     SELECT  path,component,redirect,title,icon,name from MODULE_P   WHERE PARENT_ID = #{moduleId} ;
+    </select>
+
+    <select id="findAll" resultMap="moduleResult">
+        SELECT MODULE_ID ,path,component,redirect,title,icon,hidden,name FROM module_p  WHERE parent_id ='' or parent_id is NULL
+    </select>
+</mapper>
