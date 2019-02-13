@@ -10,7 +10,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Module {
     private String moduleId;
-    
+
     private String parentId;
 
     private String path;

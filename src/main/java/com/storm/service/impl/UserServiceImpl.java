@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                return StormResult.build(400, "登陆失败");
+                return StormResult.build(500, "登陆失败");
             }
 
             return StormResult.ok();
